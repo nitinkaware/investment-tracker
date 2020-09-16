@@ -1,8 +1,8 @@
-##Track all of your bank investments 
+# Track all of your bank investments 
 
 This project can help you to track all of your bank investment. (India Only)
 
-#Instructions
+#  Instructions
 1. Copy `.env.example` to `.env` and update config values
 2. Install dependancies `composer install && php artisan key:generate`
 3. Install node dependancies `npm install`
