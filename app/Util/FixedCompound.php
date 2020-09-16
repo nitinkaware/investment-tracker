@@ -4,7 +4,7 @@ namespace App\Util;
 
 class FixedCompound extends Compound
 {
-    public function finalInvestmentValue()
+    public function currentInvestmentValue()
     {
         return round(
             $this->initialInvestment * pow(1 + ($this->interest / 100), $this->investedForYears()),
@@ -15,7 +15,7 @@ class FixedCompound extends Compound
     public function totalInterestEarned()
     {
         return round(
-            $this->finalInvestmentValue() - $this->initialInvestment,
+            $this->currentInvestmentValue() - $this->initialInvestment,
             2
         );
     }

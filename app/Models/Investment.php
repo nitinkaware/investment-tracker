@@ -29,10 +29,10 @@ class Investment extends Model
                     ->totalInterestEarned();
     }
 
-    public function finalInvestmentValue()
+    public function currentInvestmentValue()
     {
         return $this->buildCompound()
-                    ->finalInvestmentValue();
+                    ->currentInvestmentValue();
     }
 
     public function withoutInterestInvestmentValue()

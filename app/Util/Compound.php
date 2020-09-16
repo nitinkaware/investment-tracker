@@ -42,7 +42,7 @@ abstract class Compound
 
     public function percentageIncreased()
     {
-        $increased = $this->finalInvestmentValue() - $this->withoutInterestInvestmentValue();
+        $increased = $this->currentInvestmentValue() - $this->withoutInterestInvestmentValue();
 
         return round(
             ($increased / $this->withoutInterestInvestmentValue()) * 100,
@@ -50,7 +50,7 @@ abstract class Compound
         );
     }
 
-    abstract public function finalInvestmentValue();
+    abstract public function currentInvestmentValue();
 
     abstract public function totalInterestEarned();
 

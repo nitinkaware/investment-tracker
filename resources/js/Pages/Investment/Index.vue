@@ -31,7 +31,7 @@
           <div class="w-1/3 flex flex-col items-center">
             <strong class="font-medium text-gray-600 space-x-1">
               <span class="text-3xl">₹</span>
-              <span class="text-5xl">{{ toIndiaFormat(finalInvestmentValue) }}</span>
+              <span class="text-5xl">{{ toIndiaFormat(currentInvestmentValue) }}</span>
               <span class="text-base text-green-500 inline-flex items-end justify-center">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                   <path
@@ -46,7 +46,7 @@
             </strong>
             <p
               class="text-sm font-medium text-gray-500 uppe rcase trackin g-wide uppercase"
-            >Final Investment Value</p>
+            >Current Investment Value</p>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export default {
   props: [
     "withoutInterestInvestmentValue",
     "totalInterestEarned",
-    "finalInvestmentValue",
+    "currentInvestmentValue",
     "investments",
     "percentageIncreased",
   ],

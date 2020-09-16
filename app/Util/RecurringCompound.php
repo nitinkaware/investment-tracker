@@ -4,7 +4,7 @@ namespace App\Util;
 
 class RecurringCompound extends Compound
 {
-    public function finalInvestmentValue()
+    public function currentInvestmentValue()
     {
         return round(
             $this->initialInvestment * ($this->investedForMonths() + 1) + $this->totalInterestEarned(),
@@ -30,7 +30,7 @@ class RecurringCompound extends Compound
     public function withoutInterestInvestmentValue()
     {
         return round(
-            $this->finalInvestmentValue() - $this->totalInterestEarned(),
+            $this->currentInvestmentValue() - $this->totalInterestEarned(),
             2
         );
     }

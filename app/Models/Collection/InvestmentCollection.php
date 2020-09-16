@@ -21,10 +21,10 @@ class InvestmentCollection extends Collection
         });
     }
 
-    public function finalInvestmentValue()
+    public function currentInvestmentValue()
     {
         return (int) $this->sum(function ($investment) {
-            return $investment->finalInvestmentValue();
+            return $investment->currentInvestmentValue();
         });
     }
 
@@ -33,10 +33,14 @@ class InvestmentCollection extends Collection
         return $this->map(function (Investment $investment) {
             return [
                 'investmentName' => $investment->name,
+                'isRecurring' => $investment->isRecurring(),
+                'amount' => $investment->amount,
+
                 'withoutInterestInvestmentValue' => (int) $investment->withoutInterestInvestmentValue(),
-                'finalInvestmentValue' => (int) $investment->finalInvestmentValue(),
+                'currentInvestmentValue' => (int) $investment->currentInvestmentValue(),
                 'totalInterestEarned' => (int) $investment->totalInterestEarned(),
                 'percentageIncreased' => $investment->percentageIncreased(),
+
                 'investedAtRedable' => $this->redableFormat($investment),
                 'investedAt' => $investment->invested_at->format('l, j F Y'),
             ];
@@ -45,7 +49,7 @@ class InvestmentCollection extends Collection
 
     public function percentageIncreased()
     {
-        $increased = $this->finalInvestmentValue() - $this->withoutInterestInvestmentValue();
+        $increased = $this->currentInvestmentValue() - $this->withoutInterestInvestmentValue();
 
         return round(
             ($increased / $this->withoutInterestInvestmentValue()) * 100,
