@@ -16,23 +16,41 @@ class Investment extends Model
         'interest' => 'float',
         'amount' => 'float',
         'invested_at' => 'datetime',
+        'invested_till' => 'datetime',
     ];
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
+    }
 
     public function newCollection(array $models = [])
     {
         return new InvestmentCollection($models);
     }
 
-    public function totalInterestEarned()
+    public function interestEarnedUntilNow()
     {
         return $this->buildCompound()
-                    ->totalInterestEarned();
+                    ->interestEarnedUntilNow();
+    }
+    
+    public function interestEarnedOnMaturity()
+    {
+        return $this->buildCompound($this->invested_till)
+                    ->interestEarnedUntilNow();
     }
 
     public function currentInvestmentValue()
     {
         return $this->buildCompound()
                     ->currentInvestmentValue();
+    }
+
+    public function maturityValue()
+    {
+        return $this->buildCompound($this->invested_till)
+                    ->maturityValue();
     }
 
     public function withoutInterestInvestmentValue()
@@ -47,15 +65,17 @@ class Investment extends Model
                     ->percentageIncreased();
     }
 
-    public function buildCompound()
+    public function buildCompound($investedTill = null)
     {
+        $investedTill = $investedTill ?? now();
+
         $compound = "App\\Util\\{$this->type}Compound";
 
         return (new $compound(
             $this->amount,
             $this->interest,
             $this->invested_at,
-            now(),
+            $investedTill,
         ));
     }
 

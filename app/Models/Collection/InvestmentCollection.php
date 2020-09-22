@@ -3,29 +3,29 @@
 namespace App\Models\Collection;
 
 use App\Models\Investment;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class InvestmentCollection extends Collection
 {
-    public function totalInterestEarned()
+    public function interestEarnedUntilNow()
     {
-        return (int) $this->sum(function ($investment) {
-            return $investment->totalInterestEarned();
-        });
+        return (int) $this->sum(fn (Investment $investment) => $investment->interestEarnedUntilNow());
+    }
+    
+    public function interestEarnedOnMaturity()
+    {
+        return (int) $this->sum(fn (Investment $investment) => $investment->interestEarnedOnMaturity());
     }
 
     public function withoutInterestInvestmentValue()
     {
-        return (int) $this->sum(function ($investment) {
-            return $investment->withoutInterestInvestmentValue();
-        });
+        return (int) $this->sum(fn (Investment $investment) => $investment->withoutInterestInvestmentValue());
     }
 
     public function currentInvestmentValue()
     {
-        return (int) $this->sum(function ($investment) {
-            return $investment->currentInvestmentValue();
-        });
+        return (int) $this->sum(fn (Investment $investment) => $investment->currentInvestmentValue());
     }
 
     public function mapWithInvestments()
@@ -38,11 +38,15 @@ class InvestmentCollection extends Collection
 
                 'withoutInterestInvestmentValue' => (int) $investment->withoutInterestInvestmentValue(),
                 'currentInvestmentValue' => (int) $investment->currentInvestmentValue(),
-                'totalInterestEarned' => (int) $investment->totalInterestEarned(),
+                'maturityValue' => (int) $investment->maturityValue(),
+                'interestEarnedUntilNow' => (int) $investment->interestEarnedUntilNow(),
                 'percentageIncreased' => $investment->percentageIncreased(),
 
-                'investedAtRedable' => $this->redableFormat($investment),
+                'investedAtRedable' => $this->redableFormat($investment->invested_at).' Ago',
                 'investedAt' => $investment->invested_at->format('l, j F Y'),
+
+                'investedTill' => $investment->invested_till->format('l, j F Y'),
+                'investedTillRedable' => $this->redableFormat($investment->invested_till),
             ];
         });
     }
@@ -57,16 +61,16 @@ class InvestmentCollection extends Collection
         );
     }
 
-    public function redableFormat($investment)
+    public function redableFormat(Carbon $timestamp)
     {
-        if ($investment->invested_at->diffInMonths(now()) < 1) {
-            return $investment->invested_at->diff(now())->format('%d Days').' Ago';
+        if ($timestamp->diffInMonths(now()) < 1) {
+            return $timestamp->diff(now())->format('%d Days');
         }
 
-        if ($investment->invested_at->diffInYears(now()) < 1) {
-            return $investment->invested_at->diff(now())->format('%m Month %d Days').' Ago';
+        if ($timestamp->diffInYears(now()) < 1) {
+            return $timestamp->diff(now())->format('%m Month %d Days');
         }
 
-        return $investment->invested_at->diff(now())->format('%y Year %m Month %d Days').' Ago';
+        return $timestamp->diff(now())->format('%y Year %m Month %d Days');
     }
 }

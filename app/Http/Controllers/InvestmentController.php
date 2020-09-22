@@ -13,7 +13,7 @@ class InvestmentController extends Controller
 
         return Inertia::render('Investment/Index', [
             'withoutInterestInvestmentValue' => $investments->withoutInterestInvestmentValue(),
-            'totalInterestEarned' => $investments->totalInterestEarned(),
+            'interestEarnedUntilNow' => $investments->interestEarnedUntilNow(),
             'currentInvestmentValue' => $investments->currentInvestmentValue(),
             'investments' => $investments->mapWithInvestments(),
             'percentageIncreased' => $investments->percentageIncreased(),

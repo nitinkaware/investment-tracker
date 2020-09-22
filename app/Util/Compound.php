@@ -50,9 +50,11 @@ abstract class Compound
         );
     }
 
+    abstract public function maturityValue();
+
     abstract public function currentInvestmentValue();
 
-    abstract public function totalInterestEarned();
+    abstract public function interestEarnedUntilNow();
 
     abstract public function withoutInterestInvestmentValue();
 }

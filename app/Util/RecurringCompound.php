@@ -6,13 +6,23 @@ class RecurringCompound extends Compound
 {
     public function currentInvestmentValue()
     {
+        return $this->investmentValue(1);
+    }
+
+    public function maturityValue()
+    {
+        return $this->investmentValue();
+    }
+
+    protected function investmentValue(int $addMonths = 0)
+    {
         return round(
-            $this->initialInvestment * ($this->investedForMonths() + 1) + $this->totalInterestEarned(),
+            $this->initialInvestment * ($this->investedForMonths() + $addMonths) + $this->interestEarnedUntilNow(),
             2
         );
     }
 
-    public function totalInterestEarned()
+    public function interestEarnedUntilNow()
     {
         $p = $this->initialInvestment;
         $i = $this->interest;
@@ -30,7 +40,7 @@ class RecurringCompound extends Compound
     public function withoutInterestInvestmentValue()
     {
         return round(
-            $this->currentInvestmentValue() - $this->totalInterestEarned(),
+            $this->currentInvestmentValue() - $this->interestEarnedUntilNow(),
             2
         );
     }

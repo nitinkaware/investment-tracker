@@ -21,7 +21,7 @@
             <strong class="font-medium text-gray-600 space-x-1">
               <span class="text-3xl text-green-500">+</span>
               <span class="text-3xl">₹</span>
-              <span class="text-5xl">{{ toIndiaFormat(totalInterestEarned) }}</span>
+              <span class="text-5xl">{{ toIndiaFormat(interestEarnedUntilNow) }}</span>
             </strong>
             <p
               class="text-sm font-medium text-gray-500 uppe rcase trackin g-wide uppercase"
@@ -64,7 +64,7 @@ import List from "./List";
 export default {
   props: [
     "withoutInterestInvestmentValue",
-    "totalInterestEarned",
+    "interestEarnedUntilNow",
     "currentInvestmentValue",
     "investments",
     "percentageIncreased",

@@ -16,11 +16,13 @@ class CreateInvestmentsTable extends Migration
         Schema::create('investments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('bank_id');
             $table->string('name');
             $table->decimal('amount');
             $table->decimal('interest');
             $table->enum('type', ['Recurring', 'Fixed']);
             $table->dateTime('invested_at');
+            $table->dateTime('invested_till')->nullable();
             $table->timestamps();
         });
     }

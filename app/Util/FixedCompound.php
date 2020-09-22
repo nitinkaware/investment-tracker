@@ -12,7 +12,12 @@ class FixedCompound extends Compound
         );
     }
 
-    public function totalInterestEarned()
+    public function maturityValue()
+    {
+        return $this->currentInvestmentValue();
+    }
+
+    public function interestEarnedUntilNow()
     {
         return round(
             $this->currentInvestmentValue() - $this->initialInvestment,
